@@ -1,4 +1,4 @@
-let world = new World(32, 32, 32);
+let world = new World(46, 46, 46);
 
 const sceneSettings = {
     width: window.innerWidth,
