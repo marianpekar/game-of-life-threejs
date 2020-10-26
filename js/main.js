@@ -33,8 +33,6 @@ function init() {
 
 function setSceneManager() {
     sceneManager = new SceneManager(sceneSettings, cameraSettings);
-    sceneManager.addLight({x:-1, y: 2, z: 4}, 0xFFFFFF, 1);
-    sceneManager.addLight({x: 1, y:-1, z:-2}, 0xFFFFFF, 1);
 }
 
 function setBoxGeometry() {
