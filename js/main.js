@@ -3,6 +3,7 @@ let world = new World(32, 32, 32);
 const sceneSettings = {
     width: window.innerWidth,
     height: window.innerHeight,
+    backgroundColor: 0x010b1a
 }
 
 const cameraSettings = {
@@ -38,8 +39,7 @@ function setSceneManager() {
 
 function setBoxGeometry() {
     geometry = new THREE.BoxGeometry();
-    material = new THREE.MeshPhongMaterial({
-        color: 0x00ff00,
+    material = new THREE.MeshNormalMaterial({
         opacity: 0.5,
         transparent: true,
     }); 

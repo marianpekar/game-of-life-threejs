@@ -7,6 +7,7 @@ class SceneManager {
 
     createScene() {
         this.scene = new THREE.Scene();
+        this.scene.background = new THREE.Color(sceneSettings.backgroundColor);
     }
 
     createRenderer() {
