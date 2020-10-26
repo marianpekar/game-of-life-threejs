@@ -1,62 +1,67 @@
-let world = new World(30, 30, 30);
+let world = new World(32, 32, 32);
 
-let scene = new THREE.Scene();
-let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+const sceneSettings = {
+    width: window.innerWidth,
+    height: window.innerHeight,
+}
+
+const cameraSettings = {
+    fov: 75,
+    position: {
+        x: world.width * 1.5,
+        y: world.lenght * 1.5,
+        z: world.depth * 1.5
+    },
+    nearClip: 0.1,
+    farClip: 1000
+}
+
+let sceneManager, geometry, material;
 
 let cubes = [];
 
-let renderer = new THREE.WebGLRenderer();
-renderer.setSize( window.innerWidth, window.innerHeight );
-document.body.appendChild( renderer.domElement );
+function init() {
+    setSceneManager();
+    setBoxGeometry();
 
-const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshPhongMaterial({
-    color: 0x00ff00,
-    opacity: 0.5,
-    transparent: true,
-});
+    bornFewRandomElements();
+    populateSpace();
 
-camera.position.set(world.width * 1.5, world.lenght * 1.5, world.lenght * 1.5);  
+    new THREE.OrbitControls( sceneManager.camera, sceneManager.renderer.domElement ); 
+}
 
-controls = new THREE.OrbitControls( camera, renderer.domElement ); 
+function setSceneManager() {
+    sceneManager = new SceneManager(sceneSettings, cameraSettings);
+    sceneManager.addLight({x:-1, y: 2, z: 4}, 0xFFFFFF, 1);
+    sceneManager.addLight({x: 1, y:-1, z:-2}, 0xFFFFFF, 1);
+}
 
-function addLight(...pos) {
-    const color = 0xFFFFFF;
-    const intensity = 1;
-    const light = new THREE.DirectionalLight(color, intensity);
-    light.position.set(...pos);
-    scene.add(light);
-  }
-addLight(-1, 2, 4);
-addLight( 1, -1, -2);
+function setBoxGeometry() {
+    geometry = new THREE.BoxGeometry();
+    material = new THREE.MeshPhongMaterial({
+        color: 0x00ff00,
+        opacity: 0.5,
+        transparent: true,
+    }); 
+}
 
-let firstElement = world.getElementByCoords(15,15,15).born();
-let neighours = world.getElementNeighbors(firstElement);
-neighours.forEach(n => {
-    if(Math.random() >= 0.5)
-        n.born();
-})
+function bornFewRandomElements() {
+    const firstElement = world.getElementByCoords(15,15,15).born();
+    const neighours = world.getElementNeighbors(firstElement);
+    neighours.forEach(n => {
+        if(Math.random() >= 0.5)
+            n.born();
+    })
+}
 
-world.elements.forEach(e => {
-    if(e != undefined) {
-        const cube = new THREE.Mesh( geometry, material );
-
-        cube.position.x = e.position.x;
-        cube.position.y = e.position.y;
-        cube.position.z = e.position.z;
-        
-        cube.visible = e.isAlive;
-
-        scene.add( cube );
-        cubes.push( cube );
-    }
-})
-
-function animate() {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-};
-animate();
+function populateSpace() {
+    world.elements.forEach(e => {
+        if(e != undefined) {
+            cube = sceneManager.addMesh(geometry, material, e.position, e.isAlive)
+            cubes.push( cube );
+        }
+    })
+}
 
 function countAliveNeighbors(element) {
     const neighours = world.getElementNeighbors(element);
@@ -71,29 +76,36 @@ function countAliveNeighbors(element) {
 }
 
 function step() {
+    applyRules();
+    setElementStates();
+}
+
+function applyRules() {
     for(let i = 0; i < world.elements.length; i++) {
         e = world.elements[i];
         let aliveNeighbors = countAliveNeighbors(e);
 
         if(e.isAlive) 
         {
-            if(aliveNeighbors < 2) {
+            if(aliveNeighbors < 3) {
                 e.shouldDie = true;
                 continue;
             }
-            else if(aliveNeighbors > 3) {
+            else if(aliveNeighbors > 5) {
                 e.shouldDie = true;
                 continue;
             }
         }
         else if(!e.isAlive) 
         {
-            if(aliveNeighbors == 3)
+            if(aliveNeighbors == 5)
                 e.shouldBorn = true;
                 continue
         }
     }
+}
 
+function setElementStates() {
     for(let i = 0; i < world.elements.length; i++) {
         e = world.elements[i];
         if(e.shouldDie && e.isAlive) {
@@ -117,3 +129,11 @@ function onKeyDown(event) {
         step();
     }
 }
+
+init();
+
+function animate() {
+    requestAnimationFrame(animate);
+    sceneManager.renderer.render(sceneManager.scene, sceneManager.camera);
+};
+animate();
