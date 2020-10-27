@@ -96,4 +96,11 @@ class Game {
         const cell = this.world.getCellByCoords(x, y, z).toggle();
         this.cubes[cell.index].visible = cell.isAlive;
     }
+
+    clear() {
+        this.world.cells.forEach(c => {
+            c.isAlive = false;
+            this.cubes[c.index].visible = c.isAlive;
+        });
+    }
 }
