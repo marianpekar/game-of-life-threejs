@@ -31,10 +31,4 @@ const game = new Game(gameSettings);
 game.setFewRandomCellsAlive();
 
 new Controller(game);
-new THREE.OrbitControls( game.sceneManager.camera, game.sceneManager.renderer.domElement ); 
-
-function animate() {
-    requestAnimationFrame(animate);
-    game.sceneManager.renderer.render(game.sceneManager.scene, game.sceneManager.camera);
-};
-animate();
+new THREE.OrbitControls( game.sceneManager.camera, game.sceneManager.renderer.domElement );

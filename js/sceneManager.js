@@ -3,6 +3,7 @@ class SceneManager {
         this.createScene();
         this.createRenderer();
         this.createCamera();
+        this.animate();
     }
 
     createScene() {
@@ -37,4 +38,9 @@ class SceneManager {
 
         return mesh;
     }
+
+    animate() {
+        requestAnimationFrame(this.animate.bind(this));
+        this.renderer.render(this.scene, this.camera);
+    };
 }
