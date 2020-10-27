@@ -16,4 +16,9 @@ class Cell {
         this.isAlive = false;
         return this;
     }
+
+    toggle() {
+        this.isAlive = !this.isAlive;
+        return this;
+    }
 }

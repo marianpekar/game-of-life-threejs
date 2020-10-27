@@ -91,4 +91,9 @@ class Game {
             cell.shouldDie = false;
         }
     }
+
+    toggleCellAtCoords(x, y, z) {
+        const cell = this.world.getCellByCoords(x, y, z).toggle();
+        this.cubes[cell.index].visible = cell.isAlive;
+    }
 }
