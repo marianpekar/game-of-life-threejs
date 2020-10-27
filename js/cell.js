@@ -1,4 +1,4 @@
-class Element {
+class Cell {
     constructor(index, x, y, z) {
         this.index = index;
         this.position = {x: x, y: y, z: z};
