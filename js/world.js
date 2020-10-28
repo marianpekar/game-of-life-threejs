@@ -1,14 +1,14 @@
 class World {
-    constructor(width, length, depth) {
+    constructor(width, height, depth) {
         this.width = width; // x
-        this.length = length; // y
+        this.height = height; // y
         this.depth = depth; // z
         this.cells = [];
 
-        for(let i = 0; i < length * width * depth; i++) {
-            let x = Math.floor(i % length);
-            let y = Math.floor(( i / length ) % width);
-            let z = Math.floor(i / ( length * width ));
+        for(let i = 0; i < height * width * depth; i++) {
+            let x = Math.floor(i % height);
+            let y = Math.floor(( i / height ) % width);
+            let z = Math.floor(i / ( height * width ));
             this.cells[i] = new Cell(i, x, y, z);    
         }
     }
@@ -51,6 +51,6 @@ class World {
     }
 
     getCellByCoords(x, y, z) {
-        return this.cells[x + y * this.width + z * this.width * this.length];
+        return this.cells[x + y * this.width + z * this.width * this.height];
     }
 }

@@ -45,7 +45,7 @@ class Controller {
         const world = this.game.settings.world;
 
         if(finalPosition.x < 0 || finalPosition.x >= world.width ||
-           finalPosition.y < 0 || finalPosition.y >= world.length ||
+           finalPosition.y < 0 || finalPosition.y >= world.height ||
            finalPosition.z < 0 || finalPosition.z >= world.depth)
            return false;
 
@@ -88,7 +88,7 @@ class Controller {
                 break; 
             case 86: // V
                 this.toggleCursorVisibility();
-                break; 
+                break;
             default:
           }
 

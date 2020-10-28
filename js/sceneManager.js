@@ -45,6 +45,16 @@ class SceneManager {
         return mesh;
     }
 
+    drawLine(startPosition, endPosition, material) {
+        const points = [];
+        points.push( new THREE.Vector3( startPosition.x, startPosition.y, startPosition.z ));
+        points.push( new THREE.Vector3( endPosition.x, endPosition.y, endPosition.z ));
+
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const line = new THREE.Line(geometry, material);
+        this.scene.add(line);
+    }
+
     animate() {
         requestAnimationFrame(this.animate.bind(this));
         this.renderer.render(this.scene, this.camera);
