@@ -28,9 +28,9 @@ const controllerSettings = {
         color: 0xFF0000,
         opacity: 0.5,
         position: {
-            x: 0,
-            y: 0,
-            z: 0,
+            x: Math.floor(worldSettings.width / 2),
+            y: Math.floor(worldSettings.height / 2),
+            z: Math.floor(worldSettings.depth / 2)
         },
         isVisible: true
     }
