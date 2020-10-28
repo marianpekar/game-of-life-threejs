@@ -59,7 +59,7 @@ class Controller {
 
     onKeyDown(event) {
         switch(event.keyCode) {
-            case 32: // SPACE
+            case 13: // ENTER
                 this.game.step();
                 break;
             case 87: // W
@@ -83,7 +83,7 @@ class Controller {
             case 46: // DELETE
                 this.game.clear();
                 break; 
-            case 13: // ENTER
+            case 32: // SPACE
                 this.game.toggleCellAtCoords(this.cursor.position);
                 break; 
             case 86: // V
