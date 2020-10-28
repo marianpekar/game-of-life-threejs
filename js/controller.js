@@ -33,8 +33,6 @@ class Controller {
         this.cursorCube.position.x = this.cursor.position.x;
         this.cursorCube.position.y = this.cursor.position.y;
         this.cursorCube.position.z = this.cursor.position.z;
-
-        console.log(this.cursor.position);
     }
 
     validAgainstWorldBoundaries(x, y, z) {
