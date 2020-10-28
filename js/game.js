@@ -62,7 +62,13 @@ class Game {
     }
 
     setFewRandomCellsAlive() {
-        const initialCell = this.world.getCellByCoords(15, 15, 15).born();
+        const initialCellPosition = { 
+            x: Math.floor(this.settings.world.width / 2),  
+            y: Math.floor(this.settings.world.height / 2),  
+            z: Math.floor(this.settings.world.depth / 2),  
+        };
+
+        const initialCell = this.world.getCellByCoords(initialCellPosition.x, initialCellPosition.y, initialCellPosition.z).born();
         const neighbors = this.world.getCellNeighbors(initialCell);
         neighbors.forEach(n => {
             if(Math.random() >= 0.5)
