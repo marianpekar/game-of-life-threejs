@@ -1,22 +1,24 @@
 class Game {
-    constructor(gameSettings) {
-        this.world = new World(gameSettings.worldSettings.width, gameSettings.worldSettings.length, gameSettings.worldSettings.depth);
-        this.sceneManager = new SceneManager(gameSettings.sceneSettings, gameSettings.cameraSettings)
+    constructor(settings) {
+        this.settings = settings;
 
-        this.geometry = new THREE.BoxGeometry();
-        this.material = new THREE.MeshNormalMaterial({
-            opacity: 0.5,
-            transparent: true,
-        }); 
-    
+        this.boxGeometry = new THREE.BoxGeometry();
+        this.cellMaterial = new THREE.MeshNormalMaterial({ opacity: 0.5, transparent: true });
+
+        this.world = new World(this.settings.world.width, this.settings.world.length, this.settings.world.depth);
+        this.sceneManager = new SceneManager(this.settings.scene, this.settings.camera)
+        this.controller = new Controller(this);
+
         this.cubes = [];
         this.populateWorld();
+
+        this.sceneManager.addAmbientLight(this.settings.scene.ambientLightColor);
     }
 
     populateWorld() {
         this.world.cells.forEach(c => {
             if(c != undefined) {
-                let cube = this.sceneManager.addMesh(this.geometry, this.material, c.position, c.isAlive)
+                let cube = this.sceneManager.addMesh(this.boxGeometry, this.cellMaterial, c.position, c.isAlive)
                 this.cubes.push(cube);
             }
         });
@@ -92,8 +94,8 @@ class Game {
         }
     }
 
-    toggleCellAtCoords(x, y, z) {
-        const cell = this.world.getCellByCoords(x, y, z).toggle();
+    toggleCellAtCoords(position) {
+        const cell = this.world.getCellByCoords(position.x, position.y, position.z).toggle();
         this.cubes[cell.index].visible = cell.isAlive;
     }
 

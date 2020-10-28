@@ -1,7 +1,8 @@
 const sceneSettings = {
     width: window.innerWidth,
     height: window.innerHeight,
-    backgroundColor: 0x010b1a
+    backgroundColor: 0x010b1a,
+    ambientLightColor: 0xFFFFFF
 }
 
 const worldSettings = {
@@ -21,14 +22,27 @@ const cameraSettings = {
     farClip: 1000
 }
 
-const gameSettings = {
-    worldSettings: worldSettings,
-    sceneSettings: sceneSettings,
-    cameraSettings: cameraSettings
+const controllerSettings = {
+    cursor: {
+        color: 0xFF0000,
+        opacity: 0.25,
+        position: {
+            x: 0,
+            y: 0,
+            z: 0,
+        },
+        isVisible: true
+    }
 }
 
-const game = new Game(gameSettings);
+const settings = {
+    world: worldSettings,
+    scene: sceneSettings,
+    camera: cameraSettings,
+    controller: controllerSettings
+}
+
+const game = new Game(settings);
 game.setFewRandomCellsAlive();
 
-new Controller(game);
 new THREE.OrbitControls( game.sceneManager.camera, game.sceneManager.renderer.domElement );

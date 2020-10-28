@@ -28,6 +28,12 @@ class SceneManager {
         this.scene.add(light);
     }
 
+    addAmbientLight(color) {
+        const light = new THREE.AmbientLight(color);
+        this.scene.add(light);
+    }
+
+
     addMesh(geometry, material, position, isVisible) {
         const mesh = new THREE.Mesh( geometry, material );
         mesh.position.x = position.x;
