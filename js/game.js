@@ -1,7 +1,7 @@
 class Game {
     constructor(settings) {
-        this.settings = settings;
-        this.rules = settings.game.rules;
+        this.settings = settings.allSettings;
+        this.rules = this.settings.game.rules;
 
         this.boxGeometry = new THREE.BoxGeometry();
         this.cellMaterial = new THREE.MeshNormalMaterial({ opacity: this.settings.scene.cellOpacity, transparent: true });

@@ -1,5 +1,8 @@
 class SceneManager {
     constructor(sceneSettings, cameraSettings) {
+        this.sceneSettings = sceneSettings;
+        this.cameraSettings = cameraSettings;
+
         this.createScene();
         this.createRenderer();
         this.createCamera();
@@ -8,18 +11,23 @@ class SceneManager {
 
     createScene() {
         this.scene = new THREE.Scene();
-        this.scene.background = new THREE.Color(sceneSettings.backgroundColor);
+        this.scene.background = new THREE.Color(this.sceneSettings.backgroundColor);
     }
 
     createRenderer() {
         this.renderer = new THREE.WebGLRenderer();
-        this.renderer.setSize( sceneSettings.width, sceneSettings.height );
+        this.renderer.setSize( this.sceneSettings.width, this.sceneSettings.height );
         window.document.body.appendChild( this.renderer.domElement );
     }
 
     createCamera() {
-        this.camera = new THREE.PerspectiveCamera( cameraSettings.fov, sceneSettings.width / sceneSettings.height, cameraSettings.nearClip, cameraSettings.farClip );
-        this.camera.position.set(cameraSettings.position.x, cameraSettings.position.y, cameraSettings.position.z);  
+        this.camera = new THREE.PerspectiveCamera( 
+            this.cameraSettings.fov, 
+            this.sceneSettings.width / this.sceneSettings.height, 
+            this.cameraSettings.nearClip, 
+            this.cameraSettings.farClip
+        );
+        this.camera.position.set(this.cameraSettings.position.x, this.cameraSettings.position.y, this.cameraSettings.position.z);  
     }
 
     addLight(position, color, intensity) {
