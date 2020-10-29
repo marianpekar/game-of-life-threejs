@@ -3,7 +3,7 @@ class Game {
         this.settings = settings;
 
         this.boxGeometry = new THREE.BoxGeometry();
-        this.cellMaterial = new THREE.MeshNormalMaterial({ opacity: 0.5, transparent: true });
+        this.cellMaterial = new THREE.MeshNormalMaterial({ opacity: this.settings.scene.cellOpacity, transparent: true });
 
         this.world = new World(this.settings.world.width, this.settings.world.height, this.settings.world.depth);
         this.sceneManager = new SceneManager(this.settings.scene, this.settings.camera)
@@ -147,5 +147,12 @@ class Game {
             c.isAlive = false;
             this.cubes[c.index].visible = c.isAlive;
         });
+    }
+
+    setCellOpacity(opacity) {
+        if(opacity < 0.0 || opacity > 1.0)
+            return;
+
+        this.cellMaterial.opacity = opacity;
     }
 }

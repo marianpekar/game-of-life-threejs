@@ -3,7 +3,8 @@ const sceneSettings = {
     height: window.innerHeight,
     backgroundColor: 0x010b1a,
     borderLinesColor: 0xcacacc,
-    ambientLightColor: 0xffffff
+    ambientLightColor: 0xffffff,
+    cellOpacity: 0.5
 }
 
 const worldSettings = {
