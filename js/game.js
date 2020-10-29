@@ -1,6 +1,7 @@
 class Game {
     constructor(settings) {
         this.settings = settings;
+        this.rules = settings.game.rules;
 
         this.boxGeometry = new THREE.BoxGeometry();
         this.cellMaterial = new THREE.MeshNormalMaterial({ opacity: this.settings.scene.cellOpacity, transparent: true });
@@ -90,18 +91,18 @@ class Game {
     
             if(cell.isAlive) 
             {
-                if(aliveNeighbors < 3) {
+                if(aliveNeighbors <= this.rules.underpopulated) {
                     cell.shouldDie = true;
                     continue;
                 }
-                else if(aliveNeighbors > 5) {
+                else if(aliveNeighbors >= this.rules.overpopulated) {
                     cell.shouldDie = true;
                     continue;
                 }
             }
             else if(!cell.isAlive) 
             {
-                if(aliveNeighbors == 5)
+                if(aliveNeighbors == this.rules.ideal)
                     cell.shouldBorn = true;
                     continue
             }
