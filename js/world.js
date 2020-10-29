@@ -3,6 +3,11 @@ class World {
         this.width = width; // x
         this.height = height; // y
         this.depth = depth; // z
+        this.center = {
+            x: Math.floor(width / 2),
+            y: Math.floor(height / 2),
+            z: Math.floor(depth / 2)
+        };
         this.cells = [];
 
         for(let i = 0; i < height * width * depth; i++) {

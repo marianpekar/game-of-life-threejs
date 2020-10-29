@@ -30,11 +30,6 @@ class Settings {
             cursor: {
                 color: 0xFF0000,
                 opacity: 0.5,
-                position: {
-                    x: Math.floor(this.worldSettings.width / 2),
-                    y: Math.floor(this.worldSettings.height / 2),
-                    z: Math.floor(this.worldSettings.depth / 2)
-                },
                 isVisible: true
             }
         }

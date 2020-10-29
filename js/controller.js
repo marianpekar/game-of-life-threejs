@@ -14,12 +14,22 @@ class Controller {
             transparent: true 
         });  
     
+        this.worldCenter = {
+            x: this.game.world.center.x,
+            y: this.game.world.center.y,
+            z: this.game.world.center.z
+        };
+
         this.cursor = {
-            position: this.game.settings.controller.cursor.position,
+            position: this.game.world.center,
             isVisible: this.game.settings.controller.cursor.isVisible
-        }
+        };
 
         this.cursorCube = this.game.sceneManager.addMesh(this.game.boxGeometry, this.cursorMaterial, this.cursor.position, this.cursor.isVisible);
+    }
+
+    resetCursorPosition() {
+        this.setCursorPosition(this.worldCenter.x, this.worldCenter.y, this.worldCenter.z);
     }
 
     moveCursor(x, y, z) {
@@ -30,6 +40,18 @@ class Controller {
         this.cursor.position.y += y;
         this.cursor.position.z += z;
 
+        this.updateCursorCubePosition();
+    }
+
+    setCursorPosition(x, y, z) {
+        this.cursor.position.x = x;
+        this.cursor.position.y = y;
+        this.cursor.position.z = z;
+
+        this.updateCursorCubePosition();
+    }
+
+    updateCursorCubePosition() {
         this.cursorCube.position.x = this.cursor.position.x;
         this.cursorCube.position.y = this.cursor.position.y;
         this.cursorCube.position.z = this.cursor.position.z;
@@ -79,6 +101,9 @@ class Controller {
                 break;            
             case 81: // Q
                 this.moveCursor(0,1,0);
+                break;   
+            case 82: // R
+                this.resetCursorPosition();
                 break;     
             case 46: // DELETE
                 this.game.clear();
@@ -91,6 +116,5 @@ class Controller {
                 break;
             default:
           }
-
     }
 }
