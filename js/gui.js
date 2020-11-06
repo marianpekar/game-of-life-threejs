@@ -19,9 +19,16 @@ class Gui {
             speed: 1
         }
 
+        this.gameRules = {
+            underpopulated: 3,
+            overpopulated: 7,
+            ideal: 5
+        }
+
         this.setupCursorFolder();
         this.setupWorldFolder();
         this.setupSimulationFolder();
+        this.setupRulesFolder();
     }
 
     setupCursorFolder() {
@@ -95,5 +102,18 @@ class Gui {
 
     setSimulationSpeed() {
         this.game.setSimulationSpeed(this.simulation.speed);
+    }
+
+    setupRulesFolder() {
+        const rulesControlls = this.gui.addFolder("Rules");
+        rulesControlls.add(this.gameRules, 'underpopulated', 0, 26).name('Underpopulation').step(1).onChange(this.changeRules.bind(this));
+        rulesControlls.add(this.gameRules, 'overpopulated', 0, 26).name('Overpopulation').step(1).onChange(this.changeRules.bind(this));
+        rulesControlls.add(this.gameRules, 'ideal', 0, 26).name('Ideal').step(1).onChange(this.changeRules.bind(this));
+
+        rulesControlls.open();
+    }
+
+    changeRules() {
+        this.game.rules = this.gameRules;
     }
 }
