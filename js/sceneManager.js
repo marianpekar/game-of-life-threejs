@@ -7,6 +7,8 @@ class SceneManager {
         this.createRenderer();
         this.createCamera();
         this.animate();
+
+        window.addEventListener( 'resize', this.onWindowResize.bind(this), false );
     }
 
     createScene() {
@@ -66,5 +68,11 @@ class SceneManager {
     animate() {
         requestAnimationFrame(this.animate.bind(this));
         this.renderer.render(this.scene, this.camera);
-    };
+    }
+
+    onWindowResize(){
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize( window.innerWidth, window.innerHeight );
+    }
 }
