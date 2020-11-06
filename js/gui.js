@@ -16,6 +16,7 @@ class Gui {
 
         this.setupCursorFolder();
         this.setupWorldFolder();
+        this.setupSimulationFolder();
     }
 
     setupCursorFolder() {
@@ -40,6 +41,8 @@ class Gui {
         }};
         randomizeNbrsFolder.add(this, 'nbrsBecomeAliveProbability', 0.1, 1).name('Probability').step(0.1);
         randomizeNbrsFolder.add(this.randomizeAroundCursorButton, 'randomize').name('Randomize');
+
+        randomizeNbrsFolder.open();
     }
 
     
@@ -60,5 +63,16 @@ class Gui {
         worldControlls.add(this.clearButton, 'clear').name("Clear");
 
         worldControlls.open();
+    }
+
+    setupSimulationFolder() {
+        const simulationControlls = this.gui.addFolder("Simulation");
+
+        this.stepButton = { step: () => { 
+            this.game.step(); 
+        }};
+        simulationControlls.add(this.stepButton, 'step').name("Step");
+
+        simulationControlls.open();
     }
 }
