@@ -16,6 +16,10 @@ class Game {
         this.drawWorldBordeLines();
 
         this.sceneManager.addAmbientLight(this.settings.scene.ambientLightColor);
+
+        this.isRunning = false;
+        this.simulationSpeed = 1; // 1 = one step per second
+        this.timers = [];
     }
 
     populateWorld() {
@@ -76,6 +80,28 @@ class Game {
     step() {
         this.applyRules();
         this.setCellStates();
+    }
+
+    run() {
+        stop();
+
+        this.timers.push(setInterval(this.step.bind(this), 1000 / this.simulationSpeed));
+        this.isRunning = true;
+    }
+
+    stop() {
+        if(!this.isRunning)
+            return;
+
+        this.timers.forEach(t => {
+            clearInterval(t);
+        });
+    }
+
+    setSimulationSpeed(speed) {
+        this.stop();
+        this.simulationSpeed = speed;
+        this.run();
     }
 
     applyRules() {

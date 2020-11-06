@@ -14,6 +14,11 @@ class Gui {
 
         this.nbrsBecomeAliveProbability = 0.5;
 
+        this.simulation = {
+            isRunning: false, 
+            speed: 1
+        }
+
         this.setupCursorFolder();
         this.setupWorldFolder();
         this.setupSimulationFolder();
@@ -73,6 +78,22 @@ class Gui {
         }};
         simulationControlls.add(this.stepButton, 'step').name("Step");
 
+        simulationControlls.add(this.simulation, 'speed', 0.5, 2).name('Speed').step(0.1).onChange(this.setSimulationSpeed.bind(this));
+        simulationControlls.add(this.simulation, 'isRunning').name('Run').onChange(this.switchSimulationState.bind(this));
+
         simulationControlls.open();
+    }
+
+    switchSimulationState() {
+        this.setSimulationSpeed();
+
+        if(this.simulation.isRunning)
+            this.game.run();
+        else
+            this.game.stop();
+    }
+
+    setSimulationSpeed() {
+        this.game.setSimulationSpeed(this.simulation.speed);
     }
 }
