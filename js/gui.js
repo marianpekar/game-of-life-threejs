@@ -12,6 +12,8 @@ class Gui {
             z: this.controller.cursor.position.z,
         }
 
+        this.nbrsBecomeAliveProbability = 0.5;
+
         this.setupCursorFolder();
         this.setupWorldFolder();
     }
@@ -26,14 +28,18 @@ class Gui {
             this.game.toggleCellAtCoords(this.controller.cursor.position); 
         }};
         cursorControlls.add(this.toggleButton, 'toggle').name("Toggle Cell");
-
-
-        this.randomizeAroundCursorButton = { randomize: () => {
-            this.game.setRandomNeighborsAlive(this.controller.cursor.position)
-        }};
-        cursorControlls.add(this.randomizeAroundCursorButton, 'randomize').name("Randomize NBRs");
-
         cursorControlls.open();
+
+        this.setupRandomizeNBRsFolder(cursorControlls);
+    }
+
+    setupRandomizeNBRsFolder(cursorControlls) {
+        const randomizeNbrsFolder = cursorControlls.addFolder("Randomize NBRs");
+        this.randomizeAroundCursorButton = { randomize: () => {
+            this.game.setRandomNeighborsAlive(this.controller.cursor.position, this.nbrsBecomeAliveProbability)
+        }};
+        randomizeNbrsFolder.add(this, 'nbrsBecomeAliveProbability', 0.1, 1).name('Probability').step(0.1);
+        randomizeNbrsFolder.add(this.randomizeAroundCursorButton, 'randomize').name('Randomize');
     }
 
     
