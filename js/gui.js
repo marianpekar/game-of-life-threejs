@@ -25,8 +25,14 @@ class Gui {
         this.toggleButton = { toggle: () => { 
             this.game.toggleCellAtCoords(this.controller.cursor.position); 
         }};
-
         cursorControlls.add(this.toggleButton, 'toggle').name("Toggle Cell");
+
+
+        this.randomizeAroundCursorButton = { randomize: () => {
+            this.game.setRandomNeighborsAlive(this.controller.cursor.position)
+        }};
+        cursorControlls.add(this.randomizeAroundCursorButton, 'randomize').name("Randomize NBRs");
+
         cursorControlls.open();
     }
 
