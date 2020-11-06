@@ -62,11 +62,11 @@ class Game {
         this.sceneManager.drawLine(d, f, material);
     }
 
-    setRandomNeighborsAlive(position) {
-        const initialCell = this.world.getCellByCoords(position.x, position.y, position.z).born();
-        const neighbors = this.world.getCellNeighbors(initialCell);
+    setRandomNeighborsAlive(position, probability) {
+        const centerCell = this.world.getCellByCoords(position.x, position.y, position.z);
+        const neighbors = this.world.getCellNeighbors(centerCell);
         neighbors.forEach(n => {
-            if(Math.random() >= 0.5)
+            if(Math.random() >= 1.0 - probability && n != undefined) 
                 n.born();
         });
 
