@@ -101,8 +101,10 @@ class Game {
     }
 
     run() {
+        // first stop and remove all previous intervals
         stop();
 
+        // now set the new one
         this.timers.push(setInterval(this.step.bind(this), 1000 / this.simulationSpeed));
         this.isRunning = true;
     }
@@ -115,15 +117,20 @@ class Game {
             clearInterval(t);
         });
 
+        this.timers = [];
         this.isRunning = false;
     }
 
     setSimulationSpeed(speed) {
-        this.stop();
-        this.simulationSpeed = speed;
-
-        if(this.isRunning)
+        if(this.isRunning) {
+            this.stop();
+            this.simulationSpeed = speed;
             this.run();
+            
+            return;
+        }
+
+        this.simulationSpeed = speed;
     }
 
     applyRules() {

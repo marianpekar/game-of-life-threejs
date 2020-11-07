@@ -92,15 +92,13 @@ class Gui {
         this.stepButton = { step: () => this.game.step() };
         simulationControlls.add(this.stepButton, 'step').name("Step");
 
-        simulationControlls.add(this.simulation, 'speed', 0.5, 2).name('Speed').step(0.25).onChange(this.setSimulationSpeed.bind(this));
+        simulationControlls.add(this.simulation, 'speed', 0.25, 2).name('Speed').step(0.25).onChange(this.setSimulationSpeed.bind(this));
         simulationControlls.add(this.simulation, 'isRunning').name('Run').onChange(this.switchSimulationState.bind(this));
 
         simulationControlls.open();
     }
 
     switchSimulationState() {
-        this.setSimulationSpeed();
-
         if(this.simulation.isRunning)
             this.game.run();
         else
