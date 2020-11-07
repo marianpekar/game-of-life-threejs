@@ -4,7 +4,7 @@ A 3D implementation of Conway's Game of Life written in JavaScript using [Three.
 
 **It's configurable with a real-time response! (Yes, you can change rules while the simulation is running)** 
 
-Give it a try 🚀 https://github.com/marianpekar/game-of-life-threejs
+Give it a try 🚀 https://marianpekar.github.io/game-of-life-threejs/
 
 ![Conway's Game of Life 3D](docs/images/main.gif)
 
