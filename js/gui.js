@@ -28,6 +28,7 @@ class Gui {
 
         this.setupCursorFolder();
         this.setupWorldFolder();
+        this.setupAppearanceFolder();
         this.setupSimulationFolder();
         this.setupRulesFolder();
     }
@@ -69,30 +70,26 @@ class Gui {
     setupWorldFolder() {
         const worldControlls = this.gui.addFolder("World");
         
-        this.clearButton = { clear: () => { 
-            this.game.clear(); 
-        }};
+        this.clearButton = { clear: () => this.game.clear() };
         worldControlls.add(this.clearButton, 'clear').name("Clear");
+        worldControlls.add(this.appearance, 'showBorderLines').name('Show Borders').onChange(() => { this.game.showBorderLines(this.appearance.showBorderLines) });
 
         worldControlls.open();
-
-        this.setupAppearanceFolder(worldControlls);
     }
 
-    setupAppearanceFolder(parentFolder) {
-        const appearanceControlls = parentFolder.addFolder("Appearance");
+    setupAppearanceFolder() {
+        const appearanceControlls = this.gui.addFolder("Cells Appearance");
 
-        appearanceControlls.add(this.appearance, 'showBorderLines').name('Show Borders').onChange(() => { this.game.showBorderLines(this.appearance.showBorderLines) });
-        appearanceControlls.add(this.appearance, 'materialOpacity', 0.01, 1).name('Cell Opacity').step(0.01).onChange(() => this.game.setMaterialOpacity(this.appearance.materialOpacity));
         appearanceControlls.add(this.appearance, 'cubesNormalMaterial').name('Show Normal').onChange(() => this.game.showCubesNormalMaterial(this.appearance.cubesNormalMaterial));
+        appearanceControlls.add(this.appearance, 'materialOpacity', 0.01, 1).name('Opacity').step(0.01).onChange(() => this.game.setMaterialOpacity(this.appearance.materialOpacity));
+        appearanceControlls.addColor(this.appearance, 'materialColor').name('Color').onChange(() => this.game.setCubesMaterialColor(this.appearance.materialColor));
     }
+
 
     setupSimulationFolder() {
         const simulationControlls = this.gui.addFolder("Simulation");
 
-        this.stepButton = { step: () => { 
-            this.game.step(); 
-        }};
+        this.stepButton = { step: () => this.game.step() };
         simulationControlls.add(this.stepButton, 'step').name("Step");
 
         simulationControlls.add(this.simulation, 'speed', 0.5, 2).name('Speed').step(0.25).onChange(this.setSimulationSpeed.bind(this));

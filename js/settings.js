@@ -48,7 +48,12 @@ class Settings {
         this.apperanceSettings = {
             showBorderLines: true,
             cubesNormalMaterial: true,
-            materialOpacity: 0.5
+            materialOpacity: 0.5,
+            materialColor: {
+                r: 255,
+                g: 255,
+                b: 255
+            }
         }
         
         this.allSettings = {

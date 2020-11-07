@@ -18,7 +18,9 @@ class Game {
         this.borderLinesMaterial = new THREE.LineBasicMaterial( { color: this.settings.scene.borderLinesColor } );
         this.drawWorldBordeLines();
 
-        this.sceneManager.addAmbientLight(this.settings.scene.ambientLightColor);
+        //this.sceneManager.addAmbientLight(this.settings.scene.ambientLightColor);
+        this.sceneManager.addLight({x:-1, y: 2, z: 4}, 0xFFFFFF, 1);
+        this.sceneManager.addLight({x: 1, y:-1, z:-2}, 0xFFFFFF, 1);
 
         this.isRunning = false;
         this.simulationSpeed = 1; // 1 = one step per second
@@ -27,6 +29,7 @@ class Game {
         this.showBorderLines(this.appearance.showBorderLines);
         this.showCubesNormalMaterial(this.appearance.cubesNormalMaterial);
         this.setMaterialOpacity(this.appearance.materialOpacity);
+        this.setCubesMaterialColor(this.appearance.materialColor);
     }
 
     populateWorld() {
@@ -202,5 +205,9 @@ class Game {
 
     setCubesMaterial(material) {
         this.cubes.forEach(c => { c.material = material });
+    }
+
+    setCubesMaterialColor(color) {
+        this.cellMaterial.color.setRGB(color.r / 255, color.g / 255, color.b / 255);
     }
 }
