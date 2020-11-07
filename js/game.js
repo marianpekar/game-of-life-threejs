@@ -114,6 +114,8 @@ class Game {
         this.timers.forEach(t => {
             clearInterval(t);
         });
+
+        this.isRunning = false;
     }
 
     setSimulationSpeed(speed) {
