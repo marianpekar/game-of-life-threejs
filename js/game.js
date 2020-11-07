@@ -2,9 +2,11 @@ class Game {
     constructor(settings) {
         this.settings = settings.allSettings;
         this.rules = this.settings.game.rules;
+        this.appearance = this.settings.apperance;
 
         this.boxGeometry = new THREE.BoxGeometry();
-        this.cellMaterial = new THREE.MeshNormalMaterial({ opacity: this.settings.scene.cellOpacity, transparent: true });
+        this.cellMaterial = new THREE.MeshPhongMaterial({ opacity: this.settings.scene.cellOpacity, transparent: true });
+        this.cellNormalMaterial = new THREE.MeshNormalMaterial({ opacity: this.settings.scene.cellOpacity, transparent: true });
 
         this.world = new World(this.settings.world.width, this.settings.world.height, this.settings.world.depth);
         this.sceneManager = new SceneManager(this.settings.scene, this.settings.camera)
@@ -21,6 +23,10 @@ class Game {
         this.isRunning = false;
         this.simulationSpeed = 1; // 1 = one step per second
         this.timers = [];
+
+        this.showBorderLines(this.appearance.showBorderLines);
+        this.showCubesNormalMaterial(this.appearance.cubesNormalMaterial);
+        this.setMaterialOpacity(this.appearance.materialOpacity);
     }
 
     populateWorld() {
@@ -179,10 +185,22 @@ class Game {
         });
     }
 
-    setCellOpacity(opacity) {
+    setMaterialOpacity(opacity) {
         if(opacity < 0.0 || opacity > 1.0)
             return;
 
         this.cellMaterial.opacity = opacity;
+        this.cellNormalMaterial.opacity = opacity;
+    }
+
+    showCubesNormalMaterial(show) {
+        if(show)
+            this.setCubesMaterial(this.cellNormalMaterial);
+        else
+            this.setCubesMaterial(this.cellMaterial);
+    }
+
+    setCubesMaterial(material) {
+        this.cubes.forEach(c => { c.material = material });
     }
 }

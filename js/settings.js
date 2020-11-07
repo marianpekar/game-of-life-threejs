@@ -44,13 +44,20 @@ class Settings {
                 ideal: 5
             }
         }
+
+        this.apperanceSettings = {
+            showBorderLines: true,
+            cubesNormalMaterial: true,
+            materialOpacity: 0.5
+        }
         
         this.allSettings = {
             world: this.worldSettings,
             scene: this.sceneSettings,
             camera: this.cameraSettings,
             controller: this.controllerSettings,
-            game: this.gameSettings
+            game: this.gameSettings,
+            apperance: this.apperanceSettings
         }
     }
 }

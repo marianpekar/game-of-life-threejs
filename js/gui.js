@@ -1,8 +1,9 @@
 class Gui {
     constructor(game) {
+        this.game = game;
         this.controller = game.controller;
         this.world = game.world;
-        this.game = game;
+        this.appearance = game.appearance;
 
         this.gui = new dat.GUI({ autoPlace: true });
 
@@ -24,9 +25,6 @@ class Gui {
             overpopulated: game.rules.overpopulated,
             ideal: game.rules.ideal
         }
-
-        this.showBorderLines = true;
-        this.cellOpacity = game.cellMaterial.opacity;
 
         this.setupCursorFolder();
         this.setupWorldFolder();
@@ -84,8 +82,9 @@ class Gui {
     setupAppearanceFolder(parentFolder) {
         const appearanceControlls = parentFolder.addFolder("Appearance");
 
-        appearanceControlls.add(this, 'showBorderLines').name('Show Borders').onChange(() => { this.game.showBorderLines(this.showBorderLines) });
-        appearanceControlls.add(this, 'cellOpacity', 0.01, 1).name('Cell Opacity').step(0.01).onChange(() => this.game.setCellOpacity(this.cellOpacity));
+        appearanceControlls.add(this.appearance, 'showBorderLines').name('Show Borders').onChange(() => { this.game.showBorderLines(this.appearance.showBorderLines) });
+        appearanceControlls.add(this.appearance, 'materialOpacity', 0.01, 1).name('Cell Opacity').step(0.01).onChange(() => this.game.setMaterialOpacity(this.appearance.materialOpacity));
+        appearanceControlls.add(this.appearance, 'cubesNormalMaterial').name('Show Normal').onChange(() => this.game.showCubesNormalMaterial(this.appearance.cubesNormalMaterial));
     }
 
     setupSimulationFolder() {
@@ -96,7 +95,7 @@ class Gui {
         }};
         simulationControlls.add(this.stepButton, 'step').name("Step");
 
-        simulationControlls.add(this.simulation, 'speed', 0.5, 2).name('Speed').step(0.1).onChange(this.setSimulationSpeed.bind(this));
+        simulationControlls.add(this.simulation, 'speed', 0.5, 2).name('Speed').step(0.25).onChange(this.setSimulationSpeed.bind(this));
         simulationControlls.add(this.simulation, 'isRunning').name('Run').onChange(this.switchSimulationState.bind(this));
 
         simulationControlls.open();
