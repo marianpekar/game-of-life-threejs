@@ -39,9 +39,9 @@ class Settings {
         // Any dead cell with count of neighbors == _ideal_ becomes a live cell
         this.gameSettings = {
             rules: {
-                underpopulated: 3,
-                overpopulated: 7,
-                ideal: 5
+                underpopulated: 8,
+                overpopulated: 16,
+                ideal: 2
             }
         }
 
