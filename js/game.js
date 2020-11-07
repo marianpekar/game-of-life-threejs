@@ -108,7 +108,9 @@ class Game {
     setSimulationSpeed(speed) {
         this.stop();
         this.simulationSpeed = speed;
-        this.run();
+
+        if(this.isRunning)
+            this.run();
     }
 
     applyRules() {

@@ -20,12 +20,13 @@ class Gui {
         }
 
         this.gameRules = {
-            underpopulated: 3,
-            overpopulated: 7,
-            ideal: 5
+            underpopulated: game.rules.underpopulated,
+            overpopulated: game.rules.overpopulated,
+            ideal: game.rules.ideal
         }
 
         this.showBorderLines = true;
+        this.cellOpacity = game.cellMaterial.opacity;
 
         this.setupCursorFolder();
         this.setupWorldFolder();
@@ -40,7 +41,7 @@ class Gui {
         cursorControlls.add(this.cursorPosition, 'z', 0, this.world.width - 1).name('Z').step(1).onChange(this.updateCursorPosition.bind(this));
 
         this.toggleButton = { toggle: () => { 
-            this.game.toggleCellAtCoords(this.controller.cursor.position); 
+            this.game.toggleCellAtCoords((this.controller.cursor.position)); 
         }};
         cursorControlls.add(this.toggleButton, 'toggle').name("Toggle Cell");
         cursorControlls.open();
@@ -48,8 +49,8 @@ class Gui {
         this.setupRandomizeNBRsFolder(cursorControlls);
     }
 
-    setupRandomizeNBRsFolder(cursorControlls) {
-        const randomizeNbrsFolder = cursorControlls.addFolder("Randomize NBRs");
+    setupRandomizeNBRsFolder(parentFolder) {
+        const randomizeNbrsFolder = parentFolder.addFolder("Randomize NBRs");
         this.randomizeAroundCursorButton = { randomize: () => {
             this.game.setRandomNeighborsAlive(this.controller.cursor.position, this.nbrsBecomeAliveProbability)
         }};
@@ -58,7 +59,6 @@ class Gui {
 
         randomizeNbrsFolder.open();
     }
-
     
     updateCursorPosition() {
         this.controller.setCursorPosition(this.cursorPosition.x, this.cursorPosition.y, this.cursorPosition.z);
@@ -76,9 +76,16 @@ class Gui {
         }};
         worldControlls.add(this.clearButton, 'clear').name("Clear");
 
-        worldControlls.add(this, 'showBorderLines').name('Show Borders').onChange(() => { this.game.showBorderLines(this.showBorderLines) });
-
         worldControlls.open();
+
+        this.setupAppearanceFolder(worldControlls);
+    }
+
+    setupAppearanceFolder(parentFolder) {
+        const appearanceControlls = parentFolder.addFolder("Appearance");
+
+        appearanceControlls.add(this, 'showBorderLines').name('Show Borders').onChange(() => { this.game.showBorderLines(this.showBorderLines) });
+        appearanceControlls.add(this, 'cellOpacity', 0.01, 1).name('Cell Opacity').step(0.01).onChange(() => this.game.setCellOpacity(this.cellOpacity));
     }
 
     setupSimulationFolder() {
