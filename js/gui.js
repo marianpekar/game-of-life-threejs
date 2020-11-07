@@ -25,6 +25,8 @@ class Gui {
             ideal: 5
         }
 
+        this.showBorderLines = true;
+
         this.setupCursorFolder();
         this.setupWorldFolder();
         this.setupSimulationFolder();
@@ -73,6 +75,8 @@ class Gui {
             this.game.clear(); 
         }};
         worldControlls.add(this.clearButton, 'clear').name("Clear");
+
+        worldControlls.add(this, 'showBorderLines').name('Show Borders').onChange(() => { this.game.showBorderLines(this.showBorderLines) });
 
         worldControlls.open();
     }

@@ -63,6 +63,8 @@ class SceneManager {
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
         const line = new THREE.Line(geometry, material);
         this.scene.add(line);
+
+        return line;
     }
 
     animate() {

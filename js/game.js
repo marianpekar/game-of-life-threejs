@@ -13,6 +13,7 @@ class Game {
         this.cubes = [];
         this.populateWorld();
 
+        this.borderLinesMaterial = new THREE.LineBasicMaterial( { color: this.settings.scene.borderLinesColor } );
         this.drawWorldBordeLines();
 
         this.sceneManager.addAmbientLight(this.settings.scene.ambientLightColor);
@@ -49,21 +50,27 @@ class Game {
         const e = { x: 0,            y:world.height,  z: world.depth };
         const f = { x: world.height, y:world.height,  z: world.depth };
 
-        const material = new THREE.LineBasicMaterial( { color: this.settings.scene.borderLinesColor } );
-        this.sceneManager.drawLine(a, b, material);
-        this.sceneManager.drawLine(b, d, material);
-        this.sceneManager.drawLine(d, c, material);
-        this.sceneManager.drawLine(c, a, material);
+        this.borderLines = [];
+        this.borderLines.push(this.sceneManager.drawLine(a, b, this.borderLinesMaterial));
+        this.borderLines.push(this.sceneManager.drawLine(b, d, this.borderLinesMaterial));
+        this.borderLines.push(this.sceneManager.drawLine(d, c, this.borderLinesMaterial));
+        this.borderLines.push(this.sceneManager.drawLine(c, a, this.borderLinesMaterial));
 
-        this.sceneManager.drawLine(h, g, material);
-        this.sceneManager.drawLine(g, f, material);
-        this.sceneManager.drawLine(f, e, material);
-        this.sceneManager.drawLine(e, h, material);
+        this.borderLines.push(this.sceneManager.drawLine(h, g, this.borderLinesMaterial));
+        this.borderLines.push(this.sceneManager.drawLine(g, f, this.borderLinesMaterial));
+        this.borderLines.push(this.sceneManager.drawLine(f, e, this.borderLinesMaterial));
+        this.borderLines.push(this.sceneManager.drawLine(e, h, this.borderLinesMaterial));
 
-        this.sceneManager.drawLine(a, h, material);
-        this.sceneManager.drawLine(b, g, material);
-        this.sceneManager.drawLine(c, e, material);
-        this.sceneManager.drawLine(d, f, material);
+        this.borderLines.push(this.sceneManager.drawLine(a, h, this.borderLinesMaterial));
+        this.borderLines.push(this.sceneManager.drawLine(b, g, this.borderLinesMaterial));
+        this.borderLines.push(this.sceneManager.drawLine(c, e, this.borderLinesMaterial));
+        this.borderLines.push(this.sceneManager.drawLine(d, f, this.borderLinesMaterial));
+    }
+
+    showBorderLines(show) {
+        this.borderLines.forEach(b => {
+            b.visible = show;
+        });
     }
 
     setRandomNeighborsAlive(position, probability) {
