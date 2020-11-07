@@ -51,7 +51,7 @@ class Gui {
     setupRandomizeNBRsFolder(parentFolder) {
         const randomizeNbrsFolder = parentFolder.addFolder("Randomize NBRs");
         this.randomizeAroundCursorButton = { randomize: () => {
-            this.game.setRandomNeighborsAlive(this.controller.cursor.position, this.nbrsBecomeAliveProbability)
+            this.game.randomizeNeighbors(this.controller.cursor.position, this.nbrsBecomeAliveProbability)
         }};
         randomizeNbrsFolder.add(this, 'nbrsBecomeAliveProbability', 0.1, 1).name('Probability').step(0.1);
         randomizeNbrsFolder.add(this.randomizeAroundCursorButton, 'randomize').name('Randomize');

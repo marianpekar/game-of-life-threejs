@@ -82,12 +82,14 @@ class Game {
         });
     }
 
-    setRandomNeighborsAlive(position, probability) {
+    randomizeNeighbors(position, probability) {
         const centerCell = this.world.getCellByCoords(position.x, position.y, position.z);
         const neighbors = this.world.getCellNeighbors(centerCell);
         neighbors.forEach(n => {
             if(Math.random() >= 1.0 - probability && n != undefined) 
                 n.born();
+            else
+                n.die();
         });
 
         this.setCellStates();
