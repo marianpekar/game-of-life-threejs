@@ -47,7 +47,7 @@ class Settings {
 
         this.apperanceSettings = {
             showBorderLines: true,
-            cubesNormalMaterial: true,
+            showNormalMaterial: true,
             materialOpacity: 0.5,
             materialColor: {
                 r: 255,
@@ -62,7 +62,7 @@ class Settings {
             camera: this.cameraSettings,
             controller: this.controllerSettings,
             game: this.gameSettings,
-            apperance: this.apperanceSettings,
+            appearance: this.apperanceSettings,
             sourceCodeLink: "https://github.com/marianpekar/game-of-life-threejs"
         }
     }

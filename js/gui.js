@@ -1,9 +1,10 @@
 class Gui {
     constructor(game) {
         this.game = game;
-        this.controller = game.controller;
-        this.world = game.world;
-        this.appearance = game.appearance;
+        this.controller = this.game.controller;
+        this.world = this.game.world;
+        this.settings = this.game.settings;
+        this.appearance = this.game.appearance;
 
         this.gui = new dat.GUI({ autoPlace: true });
 
@@ -73,7 +74,7 @@ class Gui {
         
         const clearButton = { clear: () => this.game.clear() };
         worldControlls.add(clearButton, 'clear').name("Clear");
-        worldControlls.add(this.appearance, 'showBorderLines').name('Show Borders').onChange(() => { this.game.showBorderLines(this.appearance.showBorderLines) });
+        worldControlls.add(this.settings.appearance, 'showBorderLines').name('Show Borders').onChange(() => { this.appearance.showBorderLines(this.settings.appearance.showBorderLines) });
 
         worldControlls.open();
     }
@@ -81,9 +82,9 @@ class Gui {
     setupAppearanceFolder() {
         const appearanceControlls = this.gui.addFolder("Cells Appearance");
 
-        appearanceControlls.add(this.appearance, 'cubesNormalMaterial').name('Show Normal').onChange(() => this.game.showCubesNormalMaterial(this.appearance.cubesNormalMaterial));
-        appearanceControlls.add(this.appearance, 'materialOpacity', 0.01, 1).name('Opacity').step(0.01).onChange(() => this.game.setMaterialOpacity(this.appearance.materialOpacity));
-        appearanceControlls.addColor(this.appearance, 'materialColor').name('Color').onChange(() => this.game.setCubesMaterialColor(this.appearance.materialColor));
+        appearanceControlls.add(this.settings.appearance, 'showNormalMaterial').name('Show Normal').onChange(() => this.appearance.showCubesNormalMaterial(this.settings.appearance.showNormalMaterial));
+        appearanceControlls.add(this.settings.appearance, 'materialOpacity', 0.01, 1).name('Opacity').step(0.01).onChange(() => this.appearance.setMaterialOpacity(this.settings.appearance.materialOpacity));
+        appearanceControlls.addColor(this.settings.appearance, 'materialColor').name('Color').onChange(() => this.appearance.setCubesMaterialColor(this.settings.appearance.materialColor));
     }
 
 
