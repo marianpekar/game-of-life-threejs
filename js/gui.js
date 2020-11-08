@@ -127,6 +127,6 @@ class Gui {
         const linkSourceButton = { link: () => {
             window.open(game.settings.sourceCodeLink);    
         }};
-        this.gui.add(linkSourceButton, 'link').name("🔗 Source Code");
+        this.gui.add(linkSourceButton, 'link').name("🔗 GitHub");
     }
 }
