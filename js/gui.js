@@ -31,6 +31,7 @@ class Gui {
         this.setupAppearanceFolder();
         this.setupSimulationFolder();
         this.setupRulesFolder();
+        this.setupSourceCodeLinkButton();
     }
 
     setupCursorFolder() {
@@ -39,10 +40,10 @@ class Gui {
         cursorControlls.add(this.cursorPosition, 'y', 0, this.world.width - 1).name('Y').step(1).onChange(this.updateCursorPosition.bind(this));
         cursorControlls.add(this.cursorPosition, 'z', 0, this.world.width - 1).name('Z').step(1).onChange(this.updateCursorPosition.bind(this));
 
-        this.toggleButton = { toggle: () => { 
+        const toggleButton = { toggle: () => { 
             this.game.toggleCellAtCoords((this.controller.cursor.position)); 
         }};
-        cursorControlls.add(this.toggleButton, 'toggle').name("Toggle Cell");
+        cursorControlls.add(toggleButton, 'toggle').name("Toggle Cell");
         cursorControlls.open();
 
         this.setupRandomizeNBRsFolder(cursorControlls);
@@ -50,11 +51,11 @@ class Gui {
 
     setupRandomizeNBRsFolder(parentFolder) {
         const randomizeNbrsFolder = parentFolder.addFolder("Randomize NBRs");
-        this.randomizeAroundCursorButton = { randomize: () => {
+        const randomizeAroundCursorButton = { randomize: () => {
             this.game.randomizeNeighbors(this.controller.cursor.position, this.nbrsBecomeAliveProbability)
         }};
         randomizeNbrsFolder.add(this, 'nbrsBecomeAliveProbability', 0.1, 1).name('Probability').step(0.1);
-        randomizeNbrsFolder.add(this.randomizeAroundCursorButton, 'randomize').name('Randomize');
+        randomizeNbrsFolder.add(randomizeAroundCursorButton, 'randomize').name('Randomize');
 
         randomizeNbrsFolder.open();
     }
@@ -70,8 +71,8 @@ class Gui {
     setupWorldFolder() {
         const worldControlls = this.gui.addFolder("World");
         
-        this.clearButton = { clear: () => this.game.clear() };
-        worldControlls.add(this.clearButton, 'clear').name("Clear");
+        const clearButton = { clear: () => this.game.clear() };
+        worldControlls.add(clearButton, 'clear').name("Clear");
         worldControlls.add(this.appearance, 'showBorderLines').name('Show Borders').onChange(() => { this.game.showBorderLines(this.appearance.showBorderLines) });
 
         worldControlls.open();
@@ -120,5 +121,12 @@ class Gui {
 
     changeRules() {
         this.game.rules = this.gameRules;
+    }
+
+    setupSourceCodeLinkButton() {
+        const linkSourceButton = { link: () => {
+            window.open(game.settings.sourceCodeLink);    
+        }};
+        this.gui.add(linkSourceButton, 'link').name("🔗 Source Code");
     }
 }

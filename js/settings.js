@@ -62,7 +62,8 @@ class Settings {
             camera: this.cameraSettings,
             controller: this.controllerSettings,
             game: this.gameSettings,
-            apperance: this.apperanceSettings
+            apperance: this.apperanceSettings,
+            sourceCodeLink: "https://github.com/marianpekar/game-of-life-threejs"
         }
     }
 }
