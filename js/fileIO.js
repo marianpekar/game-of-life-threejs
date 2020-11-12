@@ -9,6 +9,8 @@ class FileIO {
         this.reader.onload = (e) => {
             const content = e.target.result;
             this.worldSerializer.deserialize(content);
+
+            this.fileInput.value = '';
         };
 
         this.fileInput.addEventListener('change', this.readFile.bind(this), false);
