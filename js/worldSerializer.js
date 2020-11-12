@@ -1,16 +1,22 @@
 class WorldSerializer {
-    static serialize(world) {
-        return JSON.stringify(this.worldToArrayOfAliveCells(world));
+    constructor(game) {
+        this.game = game;
+        this.world = this.game.world;
     }
 
-    static deserialize(world, jsonStringOfAliveCells) {
+    serialize() {
+        return JSON.stringify(this.worldToArrayOfAliveCells(this.world));
+    }
+
+    deserialize(jsonStringOfAliveCells) {
         const aliveCellsIndexes = JSON.parse(jsonStringOfAliveCells);
-        this.arrayOfLifeCellsToWorld(world, aliveCellsIndexes);
+        this.arrayOfLifeCellsToWorld(aliveCellsIndexes);
+        this.game.updateCubesVisibility();
     }
 
-    static worldToArrayOfAliveCells(world) {
+    worldToArrayOfAliveCells() {
         let aliveCellsIndexes = [];
-        world.cells.forEach(cell => {
+        this.world.cells.forEach(cell => {
             if(cell.isAlive)
                 aliveCellsIndexes.push(cell.index);
         });
@@ -18,9 +24,11 @@ class WorldSerializer {
         return aliveCellsIndexes;
     }
 
-    static arrayOfLifeCellsToWorld(world, aliveCellsIndexes) {
+    arrayOfLifeCellsToWorld(aliveCellsIndexes) {
+        this.game.clear();
+        
         aliveCellsIndexes.forEach(cellIndex => {
-            world.cells[cellIndex].isAlive = true;
-        })
+            this.world.cells[cellIndex].isAlive = true;
+        });
     }
 }

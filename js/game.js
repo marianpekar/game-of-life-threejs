@@ -137,6 +137,13 @@ class Game {
         }
     }
 
+    updateCubesVisibility() {
+        for(let i = 0; i < this.world.cells.length; i++) {
+            const cell = this.world.cells[i]; 
+            this.cubes[i].visible = cell.isAlive;
+        }
+    }
+
     toggleCellAtCoords(position) {
         const cell = this.world.getCellByCoords(position.x, position.y, position.z).toggle();
         this.cubes[cell.index].visible = cell.isAlive;
