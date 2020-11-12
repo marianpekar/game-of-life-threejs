@@ -18,7 +18,7 @@ Here you can set XYZ position of the cursor (red half-transparent cube initially
 You can also use the **Randomize NBRs** feature, to randomly switch states of 26 cells that surround the cursor with **Probability** you can set above the **Randomize** button.
 
 ### World
-This one is super simple. Her you can either **Clear** the world (kill all cells) or toggle show of world border lines.
+Here you can **Clear** the world (kill all cells), toggle **visibility of world border lines** and **Save As.../Open...** world state.
 
 ### Cells Appearance
 It's initially folded. When you unfold it, you can switch cells material between Normal and Phong material (**Show Normal** checkbox), set it's **Opacity** and **Color** (the color is, of course, see only when Show Normal is off). 
