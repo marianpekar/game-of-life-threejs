@@ -3,7 +3,7 @@ class FileIO {
         this.reader = new FileReader();
     }
 
-    saveAs(data, filename) {
+    static saveAs(data, filename) {
         var pom = document.createElement('a');
         pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(data));
         pom.setAttribute('download', filename);

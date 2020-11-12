@@ -76,6 +76,12 @@ class Gui {
         worldControlls.add(clearButton, 'clear').name("Clear");
         worldControlls.add(this.settings.appearance, 'showBorderLines').name('Show Borders').onChange(() => { this.appearance.showBorderLines(this.settings.appearance.showBorderLines) });
 
+        const saveButton = { save: () => { 
+            const worldSerialized = WorldSerializer.serialize(this.world);
+            FileIO.saveAs(worldSerialized, `world-${Date.now()}.txt`);
+        }};
+        worldControlls.add(saveButton, 'save').name("Save As...");
+
         worldControlls.open();
     }
 
