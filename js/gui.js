@@ -76,7 +76,27 @@ class Gui {
         worldControlls.add(clearButton, 'clear').name("Clear");
         worldControlls.add(this.settings.appearance, 'showBorderLines').name('Show Borders').onChange(() => { this.appearance.showBorderLines(this.settings.appearance.showBorderLines) });
 
+        const worldSerializer = new WorldSerializer(this.game);
+        this.setupSaveButton(worldControlls, worldSerializer);
+        this.setupOpenButton(worldControlls, worldSerializer);
+
         worldControlls.open();
+    }
+
+    setupSaveButton(worldControlls, worldSerializer) {
+        const saveButton = { save: () => { 
+            const worldSerialized = worldSerializer.serialize();
+            FileIO.saveAs(worldSerialized, `world-${Date.now()}.txt`);
+        }};
+        worldControlls.add(saveButton, 'save').name("Save As...");
+    }
+
+    setupOpenButton(worldControlls, worldSerializer) {
+        this.fileIO = new FileIO(worldSerializer);
+        const openButton = { open: () => {
+            this.fileIO.open();
+        }};
+        worldControlls.add(openButton, 'open').name("Open...");
     }
 
     setupAppearanceFolder() {
