@@ -59,3 +59,4 @@ You can use a *mouse to move around* and *keyboard to perform some actions* too.
 - **Space** – toggle cell state at the position of cursor
 - **Delete** – clear the world
 - **V** – toggle cursor visibility
+- **G** - toggle GUI visibility

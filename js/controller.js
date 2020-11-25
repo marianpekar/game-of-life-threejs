@@ -26,6 +26,8 @@ class Controller {
         };
 
         this.cursorCube = this.game.sceneManager.addMesh(this.game.boxGeometry, this.cursorMaterial, this.cursor.position, this.cursor.isVisible);
+
+        this.guiVisibility;
     }
 
     resetCursorPosition() {
@@ -79,6 +81,16 @@ class Controller {
         this.cursorCube.visible = this.cursor.isVisible;
     }
 
+    toggleGuiVisibility() {
+        this.guiVisibility = !this.guiVisibility;
+
+        const gui = document.getElementsByClassName("dg ac");
+        if(this.guiVisibility)
+            gui[0].style.visibility = 'hidden';
+        else 
+            gui[0].style.visibility = 'unset';
+    }
+
     onKeyDown(event) {
         switch(event.keyCode) {
             case 13: // ENTER
@@ -113,6 +125,9 @@ class Controller {
                 break; 
             case 86: // V
                 this.toggleCursorVisibility();
+                break;
+            case 71: // G
+                this.toggleGuiVisibility();
                 break;
             default:
           }
